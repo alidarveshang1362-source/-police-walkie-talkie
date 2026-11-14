@@ -2,1127 +2,670 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>بی‌سیم پلیسی آنلاین</title>
-
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
-
 body{
-  margin:0;
-  font-family:Tahoma,Arial,sans-serif;
-  background:
-    radial-gradient(circle at top,#263238 0,#101418 45%,#050607 100%);
-  color:white;
-  min-height:100vh;
+ margin:0;font-family:Tahoma,Arial,sans-serif;color:white;
+ min-height:100vh;
+ background:radial-gradient(circle at top,#263238,#101418 55%,#050607);
 }
-
-.container{
-  width:min(520px,94%);
-  margin:auto;
-  padding:25px 0 40px;
-}
-
-.logo{
-  text-align:center;
-  font-size:58px;
-  margin-top:10px;
-}
-
-h1{
-  text-align:center;
-  margin:5px 0 8px;
-}
-
-.subtitle{
-  text-align:center;
-  color:#b8c0c5;
-  margin-bottom:25px;
-}
-
+.container{width:min(520px,94%);margin:auto;padding:25px 0 40px}
+.logo{text-align:center;font-size:58px;margin-top:10px}
+h1{text-align:center;margin:5px 0 8px}
+.subtitle{text-align:center;color:#b8c0c5;margin-bottom:25px}
 .card{
-  background:rgba(25,30,34,.9);
-  border:1px solid #39434a;
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:16px;
-  box-shadow:0 12px 30px rgba(0,0,0,.3);
+ background:rgba(25,30,34,.94);border:1px solid #39434a;
+ border-radius:20px;padding:20px;margin-bottom:16px;
+ box-shadow:0 12px 30px #0005;
 }
-
-label{
-  display:block;
-  color:#cbd2d6;
-  margin-bottom:7px;
-}
-
+label{display:block;color:#cbd2d6;margin-bottom:7px}
 input{
-  width:100%;
-  padding:15px;
-  border-radius:12px;
-  border:1px solid #4b565d;
-  background:#111519;
-  color:white;
-  font-size:16px;
-  outline:none;
-  margin-bottom:12px;
+ width:100%;padding:15px;border-radius:12px;
+ border:1px solid #4b565d;background:#111519;color:white;
+ font-size:16px;outline:none;margin-bottom:12px;
 }
-
 button{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:15px;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:8px;
+ width:100%;border:0;border-radius:14px;padding:15px;
+ font-size:17px;font-weight:bold;cursor:pointer;margin-top:8px;
 }
-
-.primary{
-  background:#d32f2f;
-  color:white;
-}
-
-.primary:active{
-  transform:scale(.98);
-}
-
-.secondary{
-  background:#263238;
-  color:white;
-  border:1px solid #45545c;
-}
-
-.hidden{
-  display:none!important;
-}
-
+button:disabled{opacity:.5;cursor:not-allowed}
+.primary{background:#d32f2f;color:white}
+.secondary{background:#263238;color:white;border:1px solid #45545c}
+.hidden{display:none!important}
 .status{
-  text-align:center;
-  padding:12px;
-  border-radius:12px;
-  background:#151b1f;
-  color:#9ee7aa;
-  margin-bottom:15px;
+ text-align:center;padding:12px;border-radius:12px;
+ background:#151b1f;color:#9ee7aa;margin-bottom:15px;
 }
-
 .room{
-  text-align:center;
-  font-size:28px;
-  letter-spacing:4px;
-  background:#0b0f12;
-  border:1px dashed #68757c;
-  border-radius:14px;
-  padding:15px;
-  margin:12px 0;
+ text-align:center;font-size:28px;letter-spacing:4px;
+ background:#0b0f12;border:1px dashed #68757c;
+ border-radius:14px;padding:15px;margin:12px 0;
 }
-
-.members{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
+.members{list-style:none;padding:0;margin:0}
 .member{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#151b1f;
-  padding:12px;
-  border-radius:12px;
-  margin:7px 0;
+ display:flex;align-items:center;justify-content:space-between;
+ background:#151b1f;padding:12px;border-radius:12px;margin:7px 0;
 }
-
 .dot{
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  background:#555;
-  display:inline-block;
-  margin-left:8px;
+ width:11px;height:11px;border-radius:50%;background:#38d66b;
+ display:inline-block;margin-left:8px;
 }
-
-.online .dot{
-  background:#38d66b;
-  box-shadow:0 0 10px #38d66b;
-}
-
 .ptt{
-  width:190px;
-  height:190px;
-  border-radius:50%;
-  margin:25px auto;
-  display:block;
-  background:#b71c1c;
-  color:white;
-  border:8px solid #4a1111;
-  box-shadow:
-    0 0 0 8px #242b2f,
-    0 15px 35px rgba(0,0,0,.5);
-  font-size:22px;
-  user-select:none;
-  -webkit-user-select:none;
-  touch-action:none;
+ width:190px;height:190px;border-radius:50%;margin:25px auto;
+ display:block;background:#b71c1c;color:white;
+ border:8px solid #4a1111;
+ box-shadow:0 0 0 8px #242b2f,0 15px 35px #0008;
+ font-size:22px;user-select:none;touch-action:none;
 }
-
-.ptt.active{
-  background:#16843b;
-  border-color:#0d4823;
-  transform:scale(1.04);
-}
-
-.small{
-  color:#9ba6ac;
-  font-size:13px;
-  line-height:1.8;
-}
-
-.warning{
-  color:#ffca7a;
-}
-
-#debug{
-  white-space:pre-wrap;
-  color:#77838a;
-  font-size:11px;
-  margin-top:12px;
-}
+.ptt.active{background:#16843b;border-color:#0d4823}
+.small{color:#9ba6ac;font-size:13px;line-height:1.8}
+.warning{color:#ffca7a}
+#debug{white-space:pre-wrap;color:#9ba6ac;font-size:11px;margin-top:12px}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <div class="logo">📻</div>
-  <h1>بی‌سیم پلیسی آنلاین</h1>
-  <div class="subtitle">
-    گفت‌وگوی صوتی آنلاین برای ۲ تا ۱۰ نفر
-  </div>
+<div class="logo">📻</div>
+<h1>بی‌سیم پلیسی آنلاین</h1>
+<div class="subtitle">گفت‌وگوی صوتی آنلاین برای ۲ تا ۱۰ نفر</div>
 
-  <!-- ورود -->
-  <section id="loginCard" class="card">
+<section id="loginCard" class="card">
+<label>نام شما</label>
+<input id="nameInput" maxlength="20" placeholder="مثلاً امیرحسین">
 
-    <label>نام شما</label>
-    <input id="nameInput" maxlength="20" placeholder="مثلاً امیرحسین">
+<label>کد اتاق</label>
+<input id="roomInput" maxlength="12" placeholder="مثلاً 2580" inputmode="numeric">
 
-    <label>کد اتاق</label>
-    <input id="roomInput"
-           maxlength="12"
-           placeholder="مثلاً 2580"
-           inputmode="numeric">
+<button class="primary" id="joinBtn">🚨 ورود به اتاق</button>
+<button class="secondary" id="createBtn">🎙️ ساخت اتاق جدید</button>
 
-    <button class="primary" id="joinBtn">
-      🚨 ورود به اتاق
-    </button>
+<p class="small">کد اتاق را به دوستانت بده تا وارد همان اتاق شوند.</p>
+<p id="loginStatus" class="small"></p>
+</section>
 
-    <button class="secondary" id="createBtn">
-      🎙️ ساخت اتاق جدید
-    </button>
+<section id="roomCard" class="hidden">
 
-    <p class="small">
-      کد اتاق را به دوستانت بده تا وارد همان اتاق شوند.
-    </p>
+<div class="card">
+<div id="status" class="status">در حال اتصال...</div>
+<div>کد اتاق:</div>
+<div id="roomCode" class="room">----</div>
+<button class="secondary" id="copyBtn">📋 کپی کد اتاق</button>
+</div>
 
-  </section>
+<div class="card">
+<h3>👮 افراد داخل اتاق</h3>
+<ul id="members" class="members"></ul>
+</div>
 
-  <!-- اتاق -->
-  <section id="roomCard" class="hidden">
+<div class="card">
+<button id="ptt" class="ptt">
+نگه دار<br>صحبت کن
+</button>
+<div id="micStatus" class="status">🎙️ برای صحبت دکمه را نگه دار</div>
+<p class="small warning">برای استفاده از بی‌سیم اجازه میکروفون را تأیید کن.</p>
+</div>
 
-    <div class="card">
+<div class="card">
+<button class="primary" id="leaveBtn">🚪 خروج از اتاق</button>
+</div>
 
-      <div id="status" class="status">
-        در حال اتصال...
-      </div>
-
-      <div>کد اتاق:</div>
-
-      <div id="roomCode" class="room">----</div>
-
-      <button class="secondary" id="copyBtn">
-        📋 کپی کد اتاق
-      </button>
-
-    </div>
-
-    <div class="card">
-
-      <h3>👮 افراد داخل اتاق</h3>
-
-      <ul id="members" class="members"></ul>
-
-    </div>
-
-    <div class="card">
-
-      <button id="ptt" class="ptt">
-        نگه دار<br>
-        صحبت کن
-      </button>
-
-      <div id="micStatus" class="status">
-        🎙️ برای صحبت دکمه را نگه دار
-      </div>
-
-      <p class="small warning">
-        برای استفاده از بی‌سیم، اجازه دسترسی به میکروفون را تأیید کن.
-      </p>
-
-    </div>
-
-    <div class="card">
-      <button class="primary" id="leaveBtn">
-        🚪 خروج از اتاق
-      </button>
-    </div>
-
-    <div id="debug"></div>
-
-  </section>
-
+<div id="debug"></div>
+</section>
 </div>
 
 <script>
+/* عناصر صفحه */
+const $ = id => document.getElementById(id);
 
-let peer = null;
-let room = "";
-let myName = "";
-let myId = "";
+const loginCard=$("loginCard");
+const roomCard=$("roomCard");
+const nameInput=$("nameInput");
+const roomInput=$("roomInput");
+const loginStatus=$("loginStatus");
+const statusBox=$("status");
+const roomCode=$("roomCode");
+const membersBox=$("members");
+const ptt=$("ptt");
+const micStatus=$("micStatus");
+const debugBox=$("debug");
 
-let hostId = "";
-let isHost = false;
+let peer=null;
+let room="";
+let myName="";
+let myId="";
+let hostId="";
+let isHost=false;
+let myStream=null;
+let talking=false;
+let stopped=false;
 
-let myStream = null;
+const peers={};
+const names={};
+const connections={};
+const audioElements={};
 
-const peers = {};
-const names = {};
-const connections = {};
+function log(s){debugBox.textContent=String(s)}
+function setStatus(s){statusBox.textContent=s}
+function setMicStatus(s){micStatus.textContent=s}
 
-const loginCard = document.getElementById("loginCard");
-const roomCard = document.getElementById("roomCard");
-
-const nameInput = document.getElementById("nameInput");
-const roomInput = document.getElementById("roomInput");
-
-const joinBtn = document.getElementById("joinBtn");
-const createBtn = document.getElementById("createBtn");
-
-const roomCode = document.getElementById("roomCode");
-const statusBox = document.getElementById("status");
-const membersBox = document.getElementById("members");
-
-const ptt = document.getElementById("ptt");
-const micStatus = document.getElementById("micStatus");
-
-const copyBtn = document.getElementById("copyBtn");
-const leaveBtn = document.getElementById("leaveBtn");
-const debugBox = document.getElementById("debug");
-
-
-/* -----------------------------
-   ابزارها
------------------------------ */
-
-function log(text){
-  debugBox.textContent = text;
+function safeName(s){
+ return String(s||"").trim().replace(/[<>]/g,"").slice(0,20)||"کاربر";
 }
 
-function cleanRoom(value){
-  return value
-    .trim()
-    .replace(/[^a-zA-Z0-9_-]/g,"")
-    .slice(0,12);
+function cleanRoom(s){
+ return String(s||"").trim().replace(/[^a-zA-Z0-9_-]/g,"").slice(0,12);
 }
 
 function randomRoom(){
-  return Math.floor(1000 + Math.random()*9000).toString();
+ return String(Math.floor(1000+Math.random()*9000));
 }
-
-function safeName(name){
-  return name
-    .trim()
-    .replace(/[<>]/g,"")
-    .slice(0,20) || "کاربر";
-}
-
-function setStatus(text){
-  statusBox.textContent = text;
-}
-
-function setMicStatus(text){
-  micStatus.textContent = text;
-}
-
-
-/* -----------------------------
-   ساخت شناسه میزبان
------------------------------ */
 
 function hostPeerId(code){
-  return "radio-host-" + code.toLowerCase();
+ return "radio-host-"+code.toLowerCase();
 }
 
+function updateMembers(){
+ membersBox.innerHTML="";
+ const ids=Object.keys(names);
 
-/* -----------------------------
-   شروع
------------------------------ */
+ if(!ids.length){
+  membersBox.innerHTML="<li class='member'>هنوز کسی وارد نشده</li>";
+  return;
+ }
 
-createBtn.onclick = async () => {
+ ids.forEach(id=>{
+  const li=document.createElement("li");
+  li.className="member";
 
-  const name = safeName(nameInput.value);
+  const span=document.createElement("span");
+  const dot=document.createElement("span");
+  dot.className="dot";
+  span.appendChild(dot);
 
-  if(!name){
-    alert("نامت را وارد کن.");
+  const label=document.createTextNode(
+   (names[id]||"کاربر")+(id===myId?" (شما)":"")
+  );
+  span.appendChild(label);
+
+  const icon=document.createTextNode(id===hostId?"👑":"🎙️");
+  li.append(span,icon);
+  membersBox.appendChild(li);
+ });
+}
+
+/* بارگذاری کتابخانه PeerJS بدون متوقف کردن صفحه */
+function loadPeerJS(){
+ return new Promise((resolve,reject)=>{
+  if(window.Peer){resolve();return;}
+
+  const sources=[
+   "https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js",
+   "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"
+  ];
+
+  let index=0;
+
+  function next(){
+   if(window.Peer){resolve();return;}
+   if(index>=sources.length){
+    reject(new Error("کتابخانه ارتباطی بارگذاری نشد."));
     return;
+   }
+
+   const script=document.createElement("script");
+   script.src=sources[index++];
+   script.onload=()=>{
+    if(window.Peer) resolve();
+    else next();
+   };
+   script.onerror=()=>{
+    script.remove();
+    next();
+   };
+
+   document.head.appendChild(script);
   }
 
-  room = randomRoom();
+  next();
+ });
+}
 
-  nameInput.value = name;
-  roomInput.value = room;
+/* ساخت اتاق */
+$("createBtn").onclick=async()=>{
+ myName=safeName(nameInput.value);
+ nameInput.value=myName;
 
-  isHost = true;
-  hostId = hostPeerId(room);
+ room=randomRoom();
+ roomInput.value=room;
 
-  await startPeer(hostId);
+ isHost=true;
+ hostId=hostPeerId(room);
+
+ await startPeer(hostId);
 };
 
+/* ورود به اتاق */
+$("joinBtn").onclick=async()=>{
+ myName=safeName(nameInput.value);
+ nameInput.value=myName;
 
-joinBtn.onclick = async () => {
+ room=cleanRoom(roomInput.value);
 
-  const name = safeName(nameInput.value);
-  const code = cleanRoom(roomInput.value);
+ if(!room){
+  alert("کد اتاق را وارد کن.");
+  return;
+ }
 
-  if(!name){
-    alert("اول نامت را وارد کن.");
-    return;
-  }
+ isHost=false;
+ hostId=hostPeerId(room);
 
-  if(!code){
-    alert("کد اتاق را وارد کن.");
-    return;
-  }
-
-  room = code;
-  isHost = false;
-  hostId = hostPeerId(room);
-
-  await startPeer();
+ await startPeer();
 };
 
-
-/* -----------------------------
-   PeerJS
------------------------------ */
-
+/* شروع اتصال */
 async function startPeer(customId=null){
+ loginStatus.textContent="در حال آماده‌سازی اتصال...";
 
-  try{
+ $("createBtn").disabled=true;
+ $("joinBtn").disabled=true;
 
-    await getMicrophone();
-
-    if(customId){
-      peer = new Peer(customId,{
-        debug:1
-      });
-    }else{
-      peer = new Peer({
-        debug:1
-      });
-    }
-
-    peer.on("open", id => {
-
-      myId = id;
-
-      loginCard.classList.add("hidden");
-      roomCard.classList.remove("hidden");
-
-      roomCode.textContent = room;
-
-      names[myId] = myName;
-
-      if(isHost){
-
-        setStatus("🟢 اتاق ساخته شد؛ منتظر افراد هستیم.");
-
-        updateMembers();
-
-      }else{
-
-        setStatus("🟡 در حال اتصال به اتاق...");
-
-        connectToHost();
-
-      }
-
-    });
-
-
-    peer.on("call", call => {
-
-      call.answer(myStream);
-
-      call.on("stream", stream => {
-        attachAudio(call.peer,stream);
-      });
-
-      call.on("close",()=>{
-        removeAudio(call.peer);
-      });
-
-    });
-
-
-    peer.on("connection", conn => {
-
-      setupConnection(conn);
-
-    });
-
-
-    peer.on("error", err => {
-
-      console.log(err);
-
-      if(err.type === "unavailable-id"){
-
-        alert(
-          "این کد اتاق در حال حاضر استفاده شده است. " +
-          "یک کد دیگر انتخاب کن."
-        );
-
-        cleanup();
-        return;
-      }
-
-      if(err.type === "peer-unavailable"){
-
-        setStatus("🔴 اتاق پیدا نشد.");
-
-      }else{
-
-        setStatus("⚠️ خطا در اتصال");
-
-      }
-
-      log(err.type || err.message || "خطای ناشناخته");
-
-    });
-
-
-    peer.on("disconnected",()=>{
-
-      setStatus("🟠 اتصال قطع شد.");
-
-    });
-
-
-    peer.on("close",()=>{
-
-      setStatus("🔴 اتصال بسته شد.");
-
-    });
-
-  }catch(e){
-
-    alert(
-      "دسترسی به میکروفون ممکن نشد.\n" +
-      "لطفاً اجازه Microphone را فعال کن."
-    );
-
-    console.error(e);
-
+ try{
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+   throw new Error("مرورگر اجازه استفاده از میکروفون را نمی‌دهد. از HTTPS استفاده کن.");
   }
-}
 
+  await loadPeerJS();
 
-/* -----------------------------
-   میکروفون
------------------------------ */
-
-async function getMicrophone(){
-
-  if(myStream) return;
-
-  myStream = await navigator.mediaDevices.getUserMedia({
-    audio:{
-      echoCancellation:true,
-      noiseSuppression:true,
-      autoGainControl:true
-    },
-    video:false
+  myStream=await navigator.mediaDevices.getUserMedia({
+   audio:{
+    echoCancellation:true,
+    noiseSuppression:true,
+    autoGainControl:true
+   },
+   video:false
   });
 
-  myStream.getAudioTracks().forEach(track=>{
-    track.enabled = false;
+  myStream.getAudioTracks().forEach(t=>t.enabled=false);
+
+  peer=customId
+   ?new Peer(customId,{debug:1})
+   :new Peer({debug:1});
+
+  peer.on("open",id=>{
+   if(stopped)return;
+
+   myId=id;
+   names[myId]=myName;
+
+   loginCard.classList.add("hidden");
+   roomCard.classList.remove("hidden");
+   roomCode.textContent=room;
+
+   if(isHost){
+    setStatus("🟢 اتاق ساخته شد؛ منتظر افراد هستیم.");
+    updateMembers();
+   }else{
+    setStatus("🟡 در حال اتصال به اتاق...");
+    connectToHost();
+   }
   });
 
+  peer.on("connection",conn=>{
+   setupConnection(conn);
+  });
+
+  peer.on("call",call=>{
+   answerCall(call);
+  });
+
+  peer.on("error",err=>{
+   console.error(err);
+   log(err.type||err.message||"خطای اتصال");
+
+   if(err.type==="unavailable-id"){
+    alert("این کد اتاق قبلاً استفاده شده است. دوباره اتاق بساز.");
+    cleanup();
+   }else if(err.type==="peer-unavailable"){
+    setStatus("🔴 اتاق پیدا نشد. کد اتاق را بررسی کن.");
+   }else{
+    setStatus("⚠️ خطا در اتصال: "+(err.type||"نامشخص"));
+   }
+  });
+
+  peer.on("disconnected",()=>{
+   setStatus("🟠 ارتباط با سرور قطع شد.");
+  });
+
+  peer.on("close",()=>{
+   setStatus("🔴 اتصال بسته شد.");
+  });
+
+ }catch(e){
+  console.error(e);
+  loginStatus.textContent=e.message||"خطا در راه‌اندازی";
+  alert(
+   "اتصال برقرار نشد:\n"+
+   (e.message||"خطای ناشناخته")+
+   "\n\nاجازه میکروفون و اینترنت را بررسی کن."
+  );
+  if(myStream){
+   myStream.getTracks().forEach(t=>t.stop());
+   myStream=null;
+  }
+  $("createBtn").disabled=false;
+  $("joinBtn").disabled=false;
+ }
 }
 
-
-/* -----------------------------
-   اتصال به میزبان
------------------------------ */
-
+/* اتصال به میزبان */
 function connectToHost(){
-
-  const conn = peer.connect(hostId,{
-    reliable:true
-  });
-
-  setupConnection(conn);
-
+ const conn=peer.connect(hostId,{reliable:true});
+ setupConnection(conn);
 }
 
-
-/* -----------------------------
-   مدیریت Connection
------------------------------ */
-
+/* مدیریت اتصال داده */
 function setupConnection(conn){
+ if(!conn||!conn.peer)return;
 
-  if(!conn || !conn.peer) return;
+ if(connections[conn.peer]===conn)return;
+ connections[conn.peer]=conn;
 
-  connections[conn.peer] = conn;
-
-  conn.on("open",()=>{
-
-    conn.send({
-      type:"hello",
-      id:myId,
-      name:myName
-    });
-
+ conn.on("open",()=>{
+  conn.send({
+   type:"hello",
+   id:myId,
+   name:myName
   });
+ });
 
+ conn.on("data",data=>{
+  handleData(conn,data);
+ });
 
-  conn.on("data",data=>{
+ conn.on("close",()=>{
+  if(connections[conn.peer]===conn){
+   delete connections[conn.peer];
+  }
 
-    handleData(conn,data);
+  if(isHost){
+   delete names[conn.peer];
+   broadcast({type:"remove-user",id:conn.peer});
+   updateMembers();
+  }else{
+   removePeer(conn.peer);
+  }
+ });
 
-  });
-
-
-  conn.on("close",()=>{
-
-    delete connections[conn.peer];
-
-    removePeer(conn.peer);
-
-  });
-
-
-  conn.on("error",err=>{
-
-    console.log("connection error",err);
-
-  });
-
+ conn.on("error",e=>console.log(e));
 }
 
-
-/* -----------------------------
-   پیام‌ها
------------------------------ */
-
+/* پیام‌های اتاق */
 function handleData(conn,data){
+ if(!data||!data.type)return;
 
-  if(!data || !data.type) return;
+ if(data.type==="hello"){
+  if(!isHost)return;
 
-
-  /* ورود کاربر */
-
-  if(data.type === "hello"){
-
-    names[data.id] = data.name || "کاربر";
-
-    updateMembers();
-
-
-    if(isHost){
-
-      const list = Object.keys(names).map(id=>({
-        id:id,
-        name:names[id]
-      }));
-
-      conn.send({
-        type:"roster",
-        users:list
-      });
-
-    }
-
-    return;
+  if(!names[data.id]&&Object.keys(names).length>=10){
+   conn.send({type:"reject",reason:"اتاق پر است."});
+   conn.close();
+   return;
   }
 
+  names[data.id]=safeName(data.name);
 
-  /* فهرست افراد */
+  const list=Object.keys(names).map(id=>({
+   id,
+   name:names[id]
+  }));
 
-  if(data.type === "roster"){
+  conn.send({type:"roster",users:list});
 
-    if(!Array.isArray(data.users)) return;
+  broadcast({
+   type:"new-user",
+   id:data.id,
+   name:names[data.id]
+  },conn.peer);
 
-    data.users.forEach(user=>{
+  updateMembers();
+  return;
+ }
 
-      names[user.id] = user.name || "کاربر";
+ if(data.type==="roster"){
+  if(!Array.isArray(data.users))return;
 
-    });
-
-    updateMembers();
-
-
-    data.users.forEach(user=>{
-
-      if(user.id === myId) return;
-
-      if(!connections[user.id]){
-
-        connectToPeer(user.id);
-
-      }
-
-    });
-
-    return;
-  }
-
-
-  /* کاربر جدید توسط میزبان */
-
-  if(data.type === "new-user"){
-
-    if(data.id && data.id !== myId){
-
-      names[data.id] = data.name || "کاربر";
-
-      updateMembers();
-
-      connectToPeer(data.id);
-
-    }
-
-    return;
-  }
-
-
-  /* حذف کاربر */
-
-  if(data.type === "remove-user"){
-
-    removePeer(data.id);
-
-    return;
-  }
-
-
-  /* معرفی کاربر به بقیه */
-
-  if(data.type === "announce"){
-
-    if(isHost){
-
-      broadcast({
-        type:"new-user",
-        id:data.id,
-        name:data.name
-      },conn.peer);
-
-    }
-
-    return;
-  }
-
-}
-
-
-/* -----------------------------
-   پخش پیام برای همه
------------------------------ */
-
-function broadcast(message,except=null){
-
-  Object.keys(connections).forEach(id=>{
-
-    if(id === except) return;
-
-    const conn = connections[id];
-
-    if(conn && conn.open){
-
-      try{
-        conn.send(message);
-      }catch(e){
-        console.log(e);
-      }
-
-    }
-
+  data.users.forEach(user=>{
+   if(user&&user.id){
+    names[user.id]=safeName(user.name);
+   }
   });
-
-}
-
-
-/* -----------------------------
-   اتصال مستقیم صوتی
------------------------------ */
-
-function connectToPeer(remoteId){
-
-  if(!remoteId) return;
-  if(remoteId === myId) return;
-
-  if(peers[remoteId]) return;
-
-  if(myId > remoteId){
-
-    /*
-      فقط یکی از دو نفر تماس را شروع می‌کند
-      تا اتصال تکراری ایجاد نشود.
-    */
-
-    return;
-  }
-
-
-  const call = peer.call(
-    remoteId,
-    myStream
-  );
-
-  peers[remoteId] = call;
-
-
-  call.on("stream",stream=>{
-
-    attachAudio(remoteId,stream);
-
-  });
-
-
-  call.on("close",()=>{
-
-    removeAudio(remoteId);
-    delete peers[remoteId];
-
-  });
-
-
-  call.on("error",err=>{
-
-    console.log("call error",err);
-
-  });
-
-}
-
-
-/* -----------------------------
-   پخش صدای شخص
------------------------------ */
-
-function attachAudio(id,stream){
-
-  let audio = document.getElementById(
-    "audio-" + id
-  );
-
-  if(!audio){
-
-    audio = document.createElement("audio");
-
-    audio.id = "audio-" + id;
-
-    audio.autoplay = true;
-    audio.playsInline = true;
-
-    document.body.appendChild(audio);
-
-  }
-
-  audio.srcObject = stream;
-
-  audio.play().catch(()=>{});
-
-}
-
-
-function removeAudio(id){
-
-  const audio = document.getElementById(
-    "audio-" + id
-  );
-
-  if(audio){
-
-    audio.srcObject = null;
-    audio.remove();
-
-  }
-
-}
-
-
-/* -----------------------------
-   حذف کاربر
------------------------------ */
-
-function removePeer(id){
-
-  if(!id) return;
-
-  delete names[id];
-
-  if(peers[id]){
-
-    try{
-      peers[id].close();
-    }catch(e){}
-
-    delete peers[id];
-
-  }
-
-  removeAudio(id);
 
   updateMembers();
 
-}
+  data.users.forEach(user=>{
+   if(user.id!==myId){
+    connectToPeer(user.id);
+   }
+  });
 
+  setStatus("🟢 به اتاق وصل شدی.");
+  return;
+ }
 
-/* -----------------------------
-   نمایش افراد
------------------------------ */
-
-function updateMembers(){
-
-  membersBox.innerHTML = "";
-
-  const ids = Object.keys(names);
-
-  if(ids.length === 0){
-
-    membersBox.innerHTML =
-      "<li class='member'>هنوز کسی وارد نشده</li>";
-
-    return;
+ if(data.type==="new-user"){
+  if(data.id&&data.id!==myId){
+   names[data.id]=safeName(data.name);
+   updateMembers();
+   connectToPeer(data.id);
   }
+  return;
+ }
 
+ if(data.type==="remove-user"){
+  removePeer(data.id);
+  return;
+ }
 
-  ids.forEach(id=>{
-
-    const li = document.createElement("li");
-
-    li.className = "member online";
-
-    const name =
-      names[id] || "کاربر";
-
-    const badge =
-      id === myId ? " (شما)" : "";
-
-    li.innerHTML =
-      "<span><span class='dot'></span>" +
-      escapeHtml(name) +
-      escapeHtml(badge) +
-      "</span>" +
-      (id === hostId ? "👑" : "🎙️");
-
-    membersBox.appendChild(li);
-
-  });
-
+ if(data.type==="reject"){
+  alert(data.reason||"ورود به اتاق ممکن نیست.");
+  cleanup();
+  return;
+ }
 }
 
-
-/* -----------------------------
-   جلوگیری از HTML
------------------------------ */
-
-function escapeHtml(text){
-
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
+/* ارسال پیام برای اعضا */
+function broadcast(message,except=null){
+ Object.keys(connections).forEach(id=>{
+  if(id===except)return;
+  const c=connections[id];
+  if(c&&c.open){
+   try{c.send(message)}catch(e){console.log(e)}
+  }
+ });
 }
 
+/* تماس صوتی */
+function connectToPeer(remoteId){
+ if(!remoteId||remoteId===myId||!peer||!myStream)return;
+ if(peers[remoteId])return;
 
-/* -----------------------------
-   Push To Talk
------------------------------ */
+ /* فقط یک طرف تماس را آغاز می‌کند */
+ if(myId>remoteId)return;
 
+ const call=peer.call(remoteId,myStream);
+ if(!call)return;
+
+ peers[remoteId]=call;
+ watchCall(call,remoteId);
+}
+
+function answerCall(call){
+ if(!call||!myStream)return;
+
+ if(peers[call.peer]){
+  try{call.close()}catch(e){}
+  return;
+ }
+
+ peers[call.peer]=call;
+
+ try{
+  call.answer(myStream);
+ }catch(e){
+  console.error(e);
+ }
+
+ watchCall(call,call.peer);
+}
+
+function watchCall(call,id){
+ call.on("stream",stream=>{
+  attachAudio(id,stream);
+ });
+
+ call.on("close",()=>{
+  if(peers[id]===call)delete peers[id];
+  removeAudio(id);
+ });
+
+ call.on("error",e=>{
+  console.log("Audio error",e);
+ });
+}
+
+/* پخش صدای دریافتی */
+function attachAudio(id,stream){
+ let audio=audioElements[id];
+
+ if(!audio){
+  audio=document.createElement("audio");
+  audio.autoplay=true;
+  audio.playsInline=true;
+  audio.setAttribute("playsinline","");
+  document.body.appendChild(audio);
+  audioElements[id]=audio;
+ }
+
+ audio.srcObject=stream;
+ audio.play().catch(e=>{
+  console.log("پخش صدا نیاز به تعامل کاربر دارد",e);
+ });
+}
+
+function removeAudio(id){
+ const audio=audioElements[id];
+ if(audio){
+  audio.srcObject=null;
+  audio.remove();
+  delete audioElements[id];
+ }
+}
+
+/* حذف عضو */
+function removePeer(id){
+ if(!id)return;
+
+ delete names[id];
+
+ if(peers[id]){
+  try{peers[id].close()}catch(e){}
+  delete peers[id];
+ }
+
+ if(connections[id]){
+  try{connections[id].close()}catch(e){}
+  delete connections[id];
+ }
+
+ removeAudio(id);
+ updateMembers();
+}
+
+/* دکمه صحبت */
 function startTalking(){
+ if(!myStream||talking)return;
 
-  if(!myStream) return;
+ talking=true;
+ myStream.getAudioTracks().forEach(t=>t.enabled=true);
 
-  myStream.getAudioTracks().forEach(track=>{
-    track.enabled = true;
-  });
-
-  ptt.classList.add("active");
-
-  ptt.innerHTML =
-    "🔊<br>در حال صحبت";
-
-  setMicStatus(
-    "🟢 صدای شما در حال ارسال است"
-  );
-
+ ptt.classList.add("active");
+ ptt.innerHTML="🔊<br>در حال صحبت";
+ setMicStatus("🟢 صدای شما در حال ارسال است");
 }
-
 
 function stopTalking(){
+ if(!myStream)return;
 
-  if(!myStream) return;
+ talking=false;
+ myStream.getAudioTracks().forEach(t=>t.enabled=false);
 
-  myStream.getAudioTracks().forEach(track=>{
-    track.enabled = false;
-  });
-
-  ptt.classList.remove("active");
-
-  ptt.innerHTML =
-    "نگه دار<br>صحبت کن";
-
-  setMicStatus(
-    "🎙️ برای صحبت دکمه را نگه دار"
-  );
-
+ ptt.classList.remove("active");
+ ptt.innerHTML="نگه دار<br>صحبت کن";
+ setMicStatus("🎙️ برای صحبت دکمه را نگه دار");
 }
-
 
 ptt.addEventListener("pointerdown",e=>{
-
-  e.preventDefault();
-  startTalking();
-
+ e.preventDefault();
+ try{ptt.setPointerCapture(e.pointerId)}catch(err){}
+ startTalking();
 });
-
 
 ptt.addEventListener("pointerup",e=>{
-
-  e.preventDefault();
-  stopTalking();
-
+ e.preventDefault();
+ stopTalking();
 });
-
 
 ptt.addEventListener("pointercancel",stopTalking);
-ptt.addEventListener("pointerleave",e=>{
-  if(e.buttons) return;
+ptt.addEventListener("lostpointercapture",stopTalking);
+window.addEventListener("blur",stopTalking);
+document.addEventListener("visibilitychange",()=>{
+ if(document.hidden)stopTalking();
 });
 
-
-/* -----------------------------
-   کپی کد
------------------------------ */
-
-copyBtn.onclick = async ()=>{
-
-  try{
-
-    await navigator.clipboard.writeText(room);
-
-    copyBtn.textContent =
-      "✅ کد کپی شد";
-
-    setTimeout(()=>{
-
-      copyBtn.textContent =
-        "📋 کپی کد اتاق";
-
-    },1500);
-
-  }catch(e){
-
-    prompt(
-      "کد اتاق را کپی کن:",
-      room
-    );
-
-  }
-
+/* کپی کد */
+$("copyBtn").onclick=async()=>{
+ try{
+  await navigator.clipboard.writeText(room);
+  $("copyBtn").textContent="✅ کد کپی شد";
+ }catch(e){
+  prompt("کد اتاق را کپی کن:",room);
+ }
+ setTimeout(()=>{
+  $("copyBtn").textContent="📋 کپی کد اتاق";
+ },1500);
 };
 
-
-/* -----------------------------
-   خروج
------------------------------ */
-
-leaveBtn.onclick = ()=>{
-
-  cleanup();
-
-};
-
+/* خروج */
+$("leaveBtn").onclick=cleanup;
 
 function cleanup(){
+ stopped=true;
+ stopTalking();
 
-  try{
+ Object.keys(peers).forEach(id=>{
+  try{peers[id].close()}catch(e){}
+ });
 
-    if(myStream){
+ Object.keys(connections).forEach(id=>{
+  try{connections[id].close()}catch(e){}
+ });
 
-      myStream.getTracks().forEach(
-        track=>track.stop()
-      );
+ if(myStream){
+  myStream.getTracks().forEach(t=>t.stop());
+  myStream=null;
+ }
 
-    }
+ if(peer){
+  try{peer.destroy()}catch(e){}
+ }
 
-    Object.keys(peers).forEach(id=>{
-
-      try{
-        peers[id].close();
-      }catch(e){}
-
-    });
-
-    Object.keys(connections).forEach(id=>{
-
-      try{
-        connections[id].close();
-      }catch(e){}
-
-    });
-
-    if(peer){
-
-      try{
-        peer.destroy();
-      }catch(e){}
-
-    }
-
-  }catch(e){}
-
-  location.reload();
-
+ location.reload();
 }
-
-
-/* -----------------------------
-   وقتی کاربر وارد شد
------------------------------ */
-
-nameInput.addEventListener("change",()=>{
-
-  myName = safeName(nameInput.value);
-
-});
-
-
-/* مقدار اولیه */
-
-nameInput.value = "";
-roomInput.value = "";
-
 </script>
-
 </body>
 </html>
